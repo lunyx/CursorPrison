@@ -23,6 +23,8 @@ namespace CursorPrisonWpf
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly NotifyIcon _trayIcon;
+
         public MainWindowViewModel ViewModel { get; set; }
 
         public MainWindow()
@@ -30,11 +32,11 @@ namespace CursorPrisonWpf
             InitializeComponent();
             ViewModel = new MainWindowViewModel();
 
-            NotifyIcon ni = new NotifyIcon();
-            ni.Icon = new Icon("icon.ico");
-            ni.Text = "Cursor Prison";
-            ni.Visible = true;
-            ni.DoubleClick +=
+            _trayIcon = new NotifyIcon();
+            _trayIcon.Icon = new Icon("icon.ico");
+            _trayIcon.Text = "Cursor Prison";
+            _trayIcon.Visible = true;
+            _trayIcon.DoubleClick +=
                 delegate (object sender, EventArgs args)
                 {
                     Show();
@@ -50,6 +52,13 @@ namespace CursorPrisonWpf
                 Hide();
 
             base.OnStateChanged(e);
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            _trayIcon.Visible = false;
+
+            base.OnClosed(e);
         }
     }
 }
