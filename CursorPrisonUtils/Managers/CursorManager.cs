@@ -1,36 +1,20 @@
-﻿using System;
+﻿using CursorPrisonUtils.Config;
+using CursorPrisonUtils.Contracts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading;
+using System.Threading.Tasks;
 
-namespace CursorPrison
+namespace CursorPrisonUtils.Managers
 {
-    public class CursorManager
+    public class CursorManager : IChangeManager
     {
-        private CursorManager()
+        public void HandleForegroundWindowChange(string processName, IntPtr hwnd)
         {
-            
-        }
-
-        private static readonly Lazy<CursorManager> _instance = new Lazy<CursorManager>(() => new CursorManager());
-        public static CursorManager Instance => _instance.Value;
-
-        public void Initialize()
-        {
-            while (true)
-            {
-                ProcessEvent(GetForegroundWindow());
-                Thread.Sleep(5);
-            }
-            //hook to window change event
-            //dele = WinEventProc;
-            //SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, dele, 0, 0, WINEVENT_OUTOFCONTEXT);
-        }
-
-        private void ProcessEvent(IntPtr hwnd)
-        {
-            var windowName = GetActiveWindowTitle(hwnd);
-            if (windowName == "Guild Wars 2")
+            var dict = PlaceholderConfig.Value.ProcessConfigs.ToDictionary(c => c.ProcessName, c => c.BindCursorArea);
+            if (dict.ContainsKey(processName) && dict[processName])
             {
                 RECT rect;
                 GetWindowRect(hwnd, out rect);
@@ -142,15 +126,15 @@ namespace CursorPrison
             public override bool Equals(object obj)
             {
                 if (obj is RECT)
-                    return Equals((RECT) obj);
+                    return Equals((RECT)obj);
                 else if (obj is System.Drawing.Rectangle)
-                    return Equals(new RECT((System.Drawing.Rectangle) obj));
+                    return Equals(new RECT((System.Drawing.Rectangle)obj));
                 return false;
             }
 
             public override int GetHashCode()
             {
-                return ((System.Drawing.Rectangle) this).GetHashCode();
+                return ((System.Drawing.Rectangle)this).GetHashCode();
             }
 
             public override string ToString()
@@ -168,39 +152,6 @@ namespace CursorPrison
 
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         static extern bool ClipCursor(IntPtr zero);
-        #endregion
-
-        #region windowchange
-        WinEventDelegate dele = null;
-
-        delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
-
-        [DllImport("user32.dll")]
-        static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
-
-        private const uint WINEVENT_OUTOFCONTEXT = 0;
-        private const uint EVENT_SYSTEM_FOREGROUND = 3;
-
-
-        [DllImport("user32.dll")]
-        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
-
-        private string GetActiveWindowTitle(IntPtr hwnd)
-        {
-            const int nChars = 256;
-            StringBuilder buff = new StringBuilder(nChars);
-
-            if (GetWindowText(hwnd, buff, nChars) > 0)
-            {
-                return buff.ToString();
-            }
-            return null;
-        }
-
-        public void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
-        {
-            ProcessEvent(hwnd);
-        }
         #endregion
     }
 }

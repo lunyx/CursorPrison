@@ -36,6 +36,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,6 +50,7 @@
     <Compile Include="Config\PlaceholderConfig.cs" />
     <Compile Include="Config\ProcessConfig.cs" />
     <Compile Include="Contracts\IChangeManager.cs" />
+    <Compile Include="Managers\CursorManager.cs" />
     <Compile Include="Managers\SoundManager.cs" />
     <Compile Include="Managers\WindowManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

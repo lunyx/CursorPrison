@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace CursorPrisonUtils.Config
 {
@@ -19,6 +15,11 @@ namespace CursorPrisonUtils.Config
                     ProcessName = "GenshinImpact",
                     BorderlessWindow = true,
                     BackgroundMute = true
+                },
+                new ProcessConfig
+                {
+                    ProcessName = "Gw2-64",
+                    BindCursorArea = true
                 }
             }
         };
