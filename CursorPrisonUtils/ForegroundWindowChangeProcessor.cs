@@ -9,17 +9,18 @@ using System.Threading.Tasks;
 
 namespace CursorPrisonUtils
 {
-    public class ActiveWindowChangeProcessor
+    public class ForegroundWindowChangeProcessor
     {
         private readonly WinEventDelegate _dele;
         private readonly List<IChangeManager> _changeManagers;
 
-        public ActiveWindowChangeProcessor()
+        public ForegroundWindowChangeProcessor()
         {
             _changeManagers = new List<IChangeManager>
             {
                 new WindowManager(),
-                new SoundManager()
+                new SoundManager(),
+                new CursorManager()
             };
 
             _dele = new WinEventDelegate(WinEventProc);

@@ -9,11 +9,11 @@ namespace CursorPrisonWpf
 {
     public class MainWindowViewModel
     {
-        private ActiveWindowChangeProcessor processor;
+        private ForegroundWindowChangeProcessor processor;
 
         public MainWindowViewModel()
         {
-            processor = new ActiveWindowChangeProcessor();
+            processor = new ForegroundWindowChangeProcessor();
         }
 
     }

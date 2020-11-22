@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActiveWindowChangeProcessor.cs" />
+    <Compile Include="ForegroundWindowChangeProcessor.cs" />
     <Compile Include="Config\CursorPrisonConfig.cs" />
     <Compile Include="Config\PlaceholderConfig.cs" />
     <Compile Include="Config\ProcessConfig.cs" />
