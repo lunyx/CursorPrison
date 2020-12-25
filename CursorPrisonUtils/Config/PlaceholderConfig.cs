@@ -20,7 +20,7 @@ namespace CursorPrisonUtils.Config
                 {
                     ProcessName = "Gw2-64",
                     BindCursorArea = true
-                }
+                },
             }
         };
     }
