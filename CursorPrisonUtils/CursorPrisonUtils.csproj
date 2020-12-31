@@ -54,7 +54,6 @@
     <Compile Include="Config\CursorPrisonConfig.cs" />
     <Compile Include="ForegroundWindowChangeProcessor.cs" />
     <Compile Include="Config\ConfigManager.cs" />
-    <Compile Include="Config\PlaceholderConfig.cs" />
     <Compile Include="Config\ProcessConfig.cs" />
     <Compile Include="Contracts\IChangeManager.cs" />
     <Compile Include="Managers\CursorManager.cs" />
