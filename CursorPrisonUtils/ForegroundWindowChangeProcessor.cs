@@ -30,9 +30,18 @@ namespace CursorPrisonUtils
         public void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
         {
             GetWindowThreadProcessId(hwnd, out var pid);
-            var processName = Process.GetProcessById((int)pid).ProcessName;
-            Debug.WriteLine(processName);
+            string processName = null;
+            try 
+            {
+                 processName = Process.GetProcessById((int)pid)?.ProcessName;
+            } catch (ArgumentException)
+            {
+                // if process is no longer running, we can just ignore this
+            }
 
+            if (processName == null)
+                return;
+            
             foreach (var manager in _changeManagers)
             {
                 Task.Run(() => manager.HandleForegroundWindowChange(processName, hwnd));
