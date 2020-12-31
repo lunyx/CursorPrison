@@ -14,7 +14,7 @@ namespace CursorPrisonUtils.Managers
     {
         public void HandleForegroundWindowChange(string processName, IntPtr hwnd)
         {
-            var dict = PlaceholderConfig.Value.ProcessConfigs.ToDictionary(c => c.ProcessName, c => c.BackgroundMute);
+            var dict = ConfigManager.Instance.Config.ProcessConfigs.ToDictionary(c => c.ProcessName, c => c.BackgroundMute);
 
             using (var sessionManager = GetDefaultAudioSessionManager2(DataFlow.Render))
             {

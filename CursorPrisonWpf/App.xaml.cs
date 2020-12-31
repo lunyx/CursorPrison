@@ -37,6 +37,8 @@ namespace CursorPrisonWpf
 
                 Log.Debug("Starting up.");
 
+                Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mzc2MDU5QDMxMzgyZTM0MmUzMGdaaFlpdzlTaytqUmIyOXI1aUpNSXBTNmlLNEhkZEVVR28xcDZObTk1Qnc9");
+
                 var application = new App();
                 application.InitializeComponent();
                 application.ShutdownMode = ShutdownMode.OnMainWindowClose;

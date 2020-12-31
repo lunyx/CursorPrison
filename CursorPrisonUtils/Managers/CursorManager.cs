@@ -1,11 +1,8 @@
 ﻿using CursorPrisonUtils.Config;
 using CursorPrisonUtils.Contracts;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CursorPrisonUtils.Managers
 {
@@ -13,7 +10,7 @@ namespace CursorPrisonUtils.Managers
     {
         public void HandleForegroundWindowChange(string processName, IntPtr hwnd)
         {
-            var dict = PlaceholderConfig.Value.ProcessConfigs.ToDictionary(c => c.ProcessName, c => c.BindCursorArea);
+            var dict = ConfigManager.Instance.Config.ProcessConfigs.ToDictionary(c => c.ProcessName, c => c.BindCursorArea);
             if (dict.ContainsKey(processName) && dict[processName])
             {
                 RECT rect;

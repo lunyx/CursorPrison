@@ -1,4 +1,5 @@
-﻿using CursorPrisonUtils.Contracts;
+﻿using CursorPrison.Messaging;
+using CursorPrisonUtils.Contracts;
 using CursorPrisonUtils.Managers;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,8 @@ namespace CursorPrisonUtils
 
             if (processName == null)
                 return;
-            
+
+            CursorPrisonMessenger.Instance.ActiveProcessChanged(processName);
             foreach (var manager in _changeManagers)
             {
                 Task.Run(() => manager.HandleForegroundWindowChange(processName, hwnd));

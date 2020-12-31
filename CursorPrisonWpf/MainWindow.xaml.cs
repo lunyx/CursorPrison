@@ -30,7 +30,7 @@ namespace CursorPrisonWpf
         public MainWindow()
         {
             InitializeComponent();
-            ViewModel = new MainWindowViewModel();
+            DataContext = ViewModel = new MainWindowViewModel();
 
             _trayIcon = new NotifyIcon();
             _trayIcon.Icon = new Icon("icon.ico");

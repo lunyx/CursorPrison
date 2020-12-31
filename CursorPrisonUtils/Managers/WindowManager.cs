@@ -15,7 +15,7 @@ namespace CursorPrisonUtils.Managers
 
         public void HandleForegroundWindowChange(string processName, IntPtr hwnd)
         {
-            var dict = PlaceholderConfig.Value.ProcessConfigs.ToDictionary(c => c.ProcessName, c => c.BorderlessWindow);
+            var dict = ConfigManager.Instance.Config.ProcessConfigs.ToDictionary(c => c.ProcessName, c => c.BorderlessWindow);
             if (dict.ContainsKey(processName) && dict[processName])
             {
                 GetWindowRect(hwnd, out RECT rect);

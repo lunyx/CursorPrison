@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace CursorPrisonUtils.Config
 {
     public class CursorPrisonConfig
     {
-        public List<ProcessConfig> ProcessConfigs { get; set; }
-        public int BorderlessXOffset { get; set; }
-        public int BorderlessYOffset { get; set; }
+        public List<ProcessConfig> ProcessConfigs { get; set; } = new List<ProcessConfig>();
     }
 }
