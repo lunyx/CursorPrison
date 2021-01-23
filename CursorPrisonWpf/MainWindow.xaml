@@ -61,10 +61,10 @@
                 </Button>
             </StackPanel>
         </Grid>
-        <Syncfusion:SfDataGrid ItemsSource="{Binding ProcessConfigs}"
-                               AllowEditing="True"
-                               AllowDeleting="True"
-                               Margin="3">
-        </Syncfusion:SfDataGrid>
+        <DataGrid ItemsSource="{Binding ProcessConfigs}"
+                  CanUserDeleteRows="True"
+                  CanUserAddRows="False"
+                  Margin="3">
+        </DataGrid>
     </StackPanel>
 </Window>

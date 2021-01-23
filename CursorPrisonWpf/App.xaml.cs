@@ -28,16 +28,10 @@ namespace CursorPrisonWpf
 #else
                     .Information()
 #endif
-                    .WriteTo.File(
-                        Path.Combine(Environment.GetEnvironmentVariable("LocalAppData"), "CursorPrison", "log.txt"),
-                        rollOnFileSizeLimit: true,
-                        fileSizeLimitBytes: 10000000,
-                        retainedFileCountLimit: 5)
+                    .WriteTo.File(Path.Combine(Environment.GetEnvironmentVariable("LocalAppData"), "CursorPrison", "log.txt"))
                     .CreateLogger();
 
                 Log.Debug("Starting up.");
-
-                Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mzc2MDU5QDMxMzgyZTM0MmUzMGdaaFlpdzlTaytqUmIyOXI1aUpNSXBTNmlLNEhkZEVVR28xcDZObTk1Qnc9");
 
                 var application = new App();
                 application.InitializeComponent();
