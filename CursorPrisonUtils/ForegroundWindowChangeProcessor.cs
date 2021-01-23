@@ -3,6 +3,7 @@ using CursorPrisonUtils.Contracts;
 using CursorPrisonUtils.Managers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -36,8 +37,10 @@ namespace CursorPrisonUtils
             {
                  processName = Process.GetProcessById((int)pid)?.ProcessName;
             } catch (ArgumentException)
-            {
-                // if process is no longer running, we can just ignore this
+            {   // if process is no longer running, we can just ignore this
+            } catch (Win32Exception)
+            {   // (0x80004005): Not enough memory resources are available to process this command
+                processName = Process.GetProcessById((int)pid)?.ProcessName; // try again
             }
 
             if (processName == null)
