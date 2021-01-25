@@ -10,6 +10,12 @@ namespace CursorPrisonWpf.Models
             set { SetProperty(value); }
         }
 
+        public string Description
+        {
+            get { return GetProperty<string>(); }
+            set { SetProperty(value); }
+        }
+
         public bool BindCursorArea
         {
             get { return GetProperty<bool>(); }
@@ -19,6 +25,12 @@ namespace CursorPrisonWpf.Models
         public bool BorderlessWindow
         {
             get { return GetProperty<bool>(); }
+            set { SetProperty(value); }
+        }
+
+        public int BorderlessOffset
+        {
+            get { return GetProperty<int>(); }
             set { SetProperty(value); }
         }
 

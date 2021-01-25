@@ -1,11 +1,8 @@
 ﻿using CursorPrisonUtils.Config;
 using CursorPrisonUtils.Contracts;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CursorPrisonUtils.Managers
 {
@@ -15,8 +12,9 @@ namespace CursorPrisonUtils.Managers
 
         public void HandleForegroundWindowChange(string processName, IntPtr hwnd)
         {
-            var dict = ConfigManager.Instance.Config.ProcessConfigs.ToDictionary(c => c.ProcessName, c => c.BorderlessWindow);
-            if (dict.ContainsKey(processName) && dict[processName])
+            var dict = ConfigManager.Instance.Config.ProcessConfigs.Where(c => c.BorderlessWindow).ToDictionary(c => c.ProcessName, c => c.BorderlessOffset);
+
+            if (dict.ContainsKey(processName))
             {
                 GetWindowRect(hwnd, out RECT rect);
                 //Bot Left Right Top
@@ -30,11 +28,11 @@ namespace CursorPrisonUtils.Managers
                 GetMonitorInfo(monHandle, ref monInfo);
 
                 //right - left is width, bottom - top is height
-                var xOffset = monInfo.Monitor.Right - (rect.Right - rect.Left) + _borderWidth;
-                var yOffset = monInfo.Monitor.Bottom - (rect.Bottom - rect.Top) + _borderWidth;
+                var xOffset = monInfo.Monitor.Right - (rect.Right - rect.Left) + _borderWidth + dict[processName];
+                var yOffset = monInfo.Monitor.Bottom - (rect.Bottom - rect.Top) + _borderWidth + dict[processName];
 
                 // Move the window to (0,0) without changing its size or position in the Z order.
-                SetWindowPos(hwnd, IntPtr.Zero, xOffset, yOffset, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+                SetWindowPos(hwnd, IntPtr.Zero, xOffset, yOffset, 0, 0, SWP_NOSIZE);
             }
         }
 
@@ -42,7 +40,6 @@ namespace CursorPrisonUtils.Managers
         static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
 
         const uint SWP_NOSIZE = 0x0001;
-        const uint SWP_NOZORDER = 0x0004;
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
