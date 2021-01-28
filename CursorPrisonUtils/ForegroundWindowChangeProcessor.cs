@@ -33,12 +33,17 @@ namespace CursorPrisonUtils
         {
             GetWindowThreadProcessId(hwnd, out var pid);
             string processName = null;
-            try 
+            try
             {
-                 processName = Process.GetProcessById((int)pid)?.ProcessName;
-            } catch (ArgumentException)
-            {   // if process is no longer running, we can just ignore this
-            } catch (Win32Exception)
+                processName = Process.GetProcessById((int)pid)?.ProcessName;
+            }
+            catch (ArgumentException)
+            {   // if process is no longer running, GetProcessById can throw this, just ignore
+            }
+            catch (InvalidOperationException)
+            {   // if process is no longer running, get_ProcessName can throw this, just ignore
+            }
+            catch (Win32Exception)
             {   // (0x80004005): Not enough memory resources are available to process this command
                 processName = Process.GetProcessById((int)pid)?.ProcessName; // try again
             }
