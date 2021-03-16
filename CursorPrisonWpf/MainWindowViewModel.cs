@@ -19,10 +19,10 @@ namespace CursorPrisonWpf
         public MainWindowViewModel()
         {
             LoadConfig();
-
+            
             CursorPrisonMessenger.Instance.Messenger.Register<ActiveProcessChangedMessage>(this, ActiveProcessChanged);
-                        
-            processor = new ForegroundWindowChangeProcessor();            
+            
+            processor = new ForegroundWindowChangeProcessor(App.Current.Dispatcher);
         }
 
         #region Properties

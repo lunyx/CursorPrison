@@ -110,7 +110,6 @@ namespace CursorPrisonUtils.Managers
             {
                 using (var device = enumerator.GetDefaultAudioEndpoint(dataFlow, Role.Multimedia))
                 {
-                    Debug.WriteLine("DefaultDevice: " + device.FriendlyName);
                     var sessionManager = AudioSessionManager2.FromMMDevice(device);
                     return sessionManager;
                 }

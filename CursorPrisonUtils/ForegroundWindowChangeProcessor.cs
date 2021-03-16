@@ -1,4 +1,5 @@
-﻿using CursorPrison.Messaging;
+﻿using CursorPrison.Extensibility;
+using CursorPrison.Messaging;
 using CursorPrisonUtils.Contracts;
 using CursorPrisonUtils.Managers;
 using System;
@@ -8,6 +9,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace CursorPrisonUtils
 {
@@ -16,14 +18,14 @@ namespace CursorPrisonUtils
         private readonly WinEventDelegate _dele;
         private readonly List<IChangeManager> _changeManagers;
 
-        public ForegroundWindowChangeProcessor()
+        public ForegroundWindowChangeProcessor(Dispatcher uiDispatcher)
         {
             _changeManagers = new List<IChangeManager>
             {
                 new WindowManager(),
                 new SoundManager(),
                 new CursorManager(),
-                new CustomInjectionManager(),
+                new CustomInjectionManager(() => uiDispatcher.Invoke(() => new InjectableKeyboardHook())),
             };
 
             _dele = new WinEventDelegate(WinEventProc);
