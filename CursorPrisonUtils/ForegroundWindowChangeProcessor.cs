@@ -22,7 +22,8 @@ namespace CursorPrisonUtils
             {
                 new WindowManager(),
                 new SoundManager(),
-                new CursorManager()
+                new CursorManager(),
+                new CustomInjectionManager(),
             };
 
             _dele = new WinEventDelegate(WinEventProc);

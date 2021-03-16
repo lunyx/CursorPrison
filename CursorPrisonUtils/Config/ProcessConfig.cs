@@ -8,5 +8,6 @@
         public bool BorderlessWindow { get; set; }
         public int BorderlessOffset { get; set; }
         public bool BackgroundMute { get; set; }
+        public string CustomInjectionPath { get; set; }
     }
 }

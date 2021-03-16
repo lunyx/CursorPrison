@@ -39,5 +39,11 @@ namespace CursorPrisonWpf.Models
             get { return GetProperty<bool>(); }
             set { SetProperty(value); }
         }
+
+        public string CustomInjectionPath
+        {
+            get { return GetProperty<string>(); }
+            set { SetProperty(value); }
+        }
     }
 }
