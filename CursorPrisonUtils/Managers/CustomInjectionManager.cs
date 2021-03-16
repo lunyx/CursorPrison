@@ -31,10 +31,11 @@ namespace CursorPrisonUtils.Managers
 
             foreach (var processInjection in dict)
             {
-                if (!_injections.ContainsKey(processInjection.Value))
-                {   // load injections if not loaded already
-                    lock (InjectionBuildLock)
-                    {
+                lock (InjectionBuildLock)
+                {
+                    if (!_injections.ContainsKey(processInjection.Value))
+                    {   // load injections if not loaded already
+
                         var container = new Container(c =>
                         {
                             c.Scan(x =>
@@ -60,18 +61,21 @@ namespace CursorPrisonUtils.Managers
                     }
                 }
 
-                foreach (var injection in _injections[processInjection.Value].GetAllInstances<ICustomContextChangeAction>())
+                lock (InjectionBuildLock)
                 {
-                    try
+                    foreach (var injection in _injections[processInjection.Value].GetAllInstances<ICustomContextChangeAction>())
                     {
-                        if (processName == processInjection.Key)
-                            injection.Activate();
-                        else
-                            injection.Deactivate();
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error($"Error in custom injection: activeProcess:{processName} targetProcess:{processInjection.Key} class:{injection.GetType().Name}. {ex}");
+                        try
+                        {
+                            if (processName == processInjection.Key)
+                                injection.Activate();
+                            else
+                                injection.Deactivate();
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error($"Error in custom injection: activeProcess:{processName} targetProcess:{processInjection.Key} class:{injection.GetType().Name}. {ex}");
+                        }
                     }
                 }
             }
